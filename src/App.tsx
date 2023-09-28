@@ -13,7 +13,6 @@ function App() {
         { id: v1(), title:"React", isDone:false},
         { id: v1(), title:"Redux", isDone:false},
     ]);
-    console.log(tasks)
     const [filter, setFilter] = useState<FilterValuesType>('all')
 
     function addTask(title:string){
@@ -34,6 +33,17 @@ function App() {
         setFilter(value)
     }
 
+    function changeTask(taskId: string, isDone:boolean){
+        const task = tasks.find(t=>t.id===taskId)
+
+        if(task){
+           task.isDone = isDone
+       }
+
+        setTasks( [... tasks])
+
+    }
+
     let tasksForList = tasks;
     if(filter ==="active"){
         tasksForList = tasks.filter(t=>!t.isDone);
@@ -49,6 +59,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter = {changeFilter}
                       addTask={addTask}
+                      changeTaskStatus = {changeTask}
+                      filter = {filter}
             />
         </div>
     )
